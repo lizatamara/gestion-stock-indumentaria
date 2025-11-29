@@ -9,6 +9,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.CallableStatement; 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.ResultSet;
 /**
  *
  * @author liza_
@@ -20,7 +23,7 @@ public class DaoAccesorio {
     public DaoAccesorio() {
     }
     
-    // agregar
+    // Agregar
     
     public boolean agregarAccesorio(Accesorio a) throws SQLException{
         boolean centinela = false;
@@ -32,7 +35,7 @@ public class DaoAccesorio {
             cs.setString(2, a.getTipo());
             cs.setString(3, a.getMarca());
             cs.setString(4, a.getModelo());
-            cs.setString(5, String.valueOf(a.getTemporada()));
+            cs.setString(5, a.getTemporada());
             cs.setInt(6, a.getPrecio());
             if (a.getFecha_ingreso() != null) {
                 cs.setDate(7, new Date(a.getFecha_ingreso().getTime()));
@@ -47,4 +50,34 @@ public class DaoAccesorio {
         }
         return centinela;
     }
+    
+    // Listar
+    public List<Accesorio> listarAccesorio() throws SQLException{
+        List<Accesorio> listado = new ArrayList<>();
+        try {
+            this.conexion = new Conexion().obtenerConexion();
+            String query = "select * from ACCESORIO order by id_accesorio";
+            CallableStatement cs = this.conexion.prepareCall(query);
+            
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()){
+                Accesorio a = new Accesorio();
+                a.setId_accesorio(rs.getInt("ID_ACCESORIO"));
+                a.setTipo(rs.getString("TIPO"));
+                a.setMarca(rs.getString("MARCA"));
+                a.setModelo(rs.getString("MODELO"));
+                a.setTemporada(rs.getString("TEMPORADA"));
+                a.setPrecio(rs.getInt("PRECIO"));
+                a.setFecha_ingreso(rs.getDate("FECHA_INGRESO"));
+                listado.add(a);
+            }
+        } catch (Exception e) {
+            System.err.println("Error Listar "+e.getMessage());
+            
+        } finally {
+            this.conexion.close();
+        }
+        return listado;
+    }
+    
 }

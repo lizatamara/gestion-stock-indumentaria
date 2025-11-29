@@ -13,6 +13,7 @@ public class Conexion {
     //Host de tu servidor
     private String url = "jdbc:oracle:thin:"+usuario+"/"+password+
             "@localhost:1521:orcl";
+    // Cambiar de orcl a xe y viceversa ^
     
     //Constructor para conectarnos a la BD
     public Conexion() {

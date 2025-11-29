@@ -16,14 +16,14 @@ public class Accesorio {
     private String tipo;
     private String marca;
     private String modelo;
-    private char temporada;
+    private String temporada;
     private int precio;
     private Date fecha_ingreso;
 
     public Accesorio() {
     }
 
-    public Accesorio(int id_accesorio, String tipo, String marca, String modelo, char temporada, int precio, Date fecha_ingreso) {
+    public Accesorio(int id_accesorio, String tipo, String marca, String modelo, String temporada, int precio, Date fecha_ingreso) {
         this.id_accesorio = id_accesorio;
         this.tipo = tipo;
         this.marca = marca;
@@ -65,11 +65,11 @@ public class Accesorio {
         this.modelo = modelo;
     }
 
-    public char getTemporada() {
+    public String getTemporada() {
         return temporada;
     }
 
-    public void setTemporada(char temporada) {
+    public void setTemporada(String temporada) {
         this.temporada = temporada;
     }
 
