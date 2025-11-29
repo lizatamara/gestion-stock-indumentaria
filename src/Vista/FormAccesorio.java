@@ -3,7 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
+import Controlador.DaoAccesorio;
+import Modelo.Accesorio;
 import com.toedter.calendar.JDateChooser;
+import java.sql.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -45,7 +49,7 @@ public class FormAccesorio extends javax.swing.JFrame {
         txtModelo = new javax.swing.JTextField();
         jcalFechaIngreso = new com.toedter.calendar.JDateChooser();
         lblIngreso = new javax.swing.JLabel();
-        cbTipo = new javax.swing.JComboBox<>();
+        cboTipo = new javax.swing.JComboBox<>();
         spPrecio = new javax.swing.JSpinner();
         btnAgregar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -112,9 +116,14 @@ public class FormAccesorio extends javax.swing.JFrame {
         lblIngreso.setAutoscrolls(true);
         lblIngreso.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bolso", "Sombrero", "Cinturón", "Pañuelo", "Guantes", "Lentes" }));
+        cboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bolso", "Sombrero", "Cinturón", "Pañuelo", "Guantes", "Lentes" }));
 
         btnAgregar.setText("Registrar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("Modificar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -177,7 +186,7 @@ public class FormAccesorio extends javax.swing.JFrame {
                                 .addComponent(txtMarca, javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(txtModelo, javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(spCodigo)
-                                .addComponent(cbTipo, 0, 149, Short.MAX_VALUE)
+                                .addComponent(cboTipo, 0, 149, Short.MAX_VALUE)
                                 .addComponent(spPrecio)))
                         .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -220,7 +229,7 @@ public class FormAccesorio extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTipo)
-                            .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblMarca)
@@ -291,6 +300,41 @@ public class FormAccesorio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        boolean centinela = false;
+        try {
+            this.conexion.close();
+            
+            int id_accesorio = Integer.parseInt(spCodigo.getValue().toString());
+            String tipo = cboTipo.getSelectedItem().toString();
+            String marca = txtMarca.getText();
+            String modelo = txtModelo.getText();
+            //Date fecha_ingreso = JcalFechaIngreso.getDate();
+            
+            java.sql.Date fecha_ingreso;
+            if (jcalFechaIngreso.getDate() != null) {
+                fecha_ingreso = new java.sql.Date(jcalFechaIngreso.getDate().getTime());
+            } else {
+                fecha_ingreso = new java.sql.Date(System.currentTimeMillis()); // Fecha actual como haces en el DAO
+            }
+            int precio = Integer.parseInt(spPrecio.getValue().toString());
+
+            Accesorio a = new Accesorio(id_accesorio, tipo, marca, modelo, fecha_ingreso, precio);
+            if(new DaoAccesorio().agregarAccesorio(a)){
+                JOptionPane.showMessageDialog(this, "Registratdo");
+            } else {
+                JOptionPane.showMessageDialog(this, "No Registratdo");
+            }
+            
+            
+        } catch (Exception e){
+            System.err.println("Error al insertar elemento "+e.getMessage());
+        } finally {
+            this.conexion.close();
+        }
+        return centinela;
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -332,7 +376,7 @@ public class FormAccesorio extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JComboBox<String> cbTipo;
+    private javax.swing.JComboBox<String> cboTipo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

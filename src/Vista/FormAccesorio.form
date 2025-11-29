@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="Gesti&#xf3;n de Accesorios"/>
@@ -68,7 +68,7 @@
                                   <Component id="txtMarca" alignment="1" max="32767" attributes="0"/>
                                   <Component id="txtModelo" alignment="1" max="32767" attributes="0"/>
                                   <Component id="spCodigo" max="32767" attributes="0"/>
-                                  <Component id="cbTipo" alignment="0" pref="149" max="32767" attributes="0"/>
+                                  <Component id="cboTipo" alignment="0" pref="149" max="32767" attributes="0"/>
                                   <Component id="spPrecio" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -126,7 +126,7 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblTipo" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cbTipo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cboTipo" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -291,7 +291,7 @@
             <Property name="horizontalTextPosition" type="int" value="2"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="cbTipo">
+        <Component class="javax.swing.JComboBox" name="cboTipo">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="6">
@@ -314,6 +314,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Registrar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnEditar">
           <Properties>

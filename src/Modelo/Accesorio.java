@@ -16,7 +16,6 @@ public class Accesorio {
     private String tipo;
     private String marca;
     private String modelo;
-    private String temporada;
     private int precio;
     private Date fecha_ingreso;
 
@@ -28,7 +27,6 @@ public class Accesorio {
         this.tipo = tipo;
         this.marca = marca;
         this.modelo = modelo;
-        this.temporada = temporada;
         this.precio = precio;
         this.fecha_ingreso = fecha_ingreso;
     }
@@ -65,14 +63,6 @@ public class Accesorio {
         this.modelo = modelo;
     }
 
-    public String getTemporada() {
-        return temporada;
-    }
-
-    public void setTemporada(String temporada) {
-        this.temporada = temporada;
-    }
-
     public int getPrecio() {
         return precio;
     }
@@ -91,7 +81,7 @@ public class Accesorio {
 
     @Override
     public String toString() {
-        return "Accesorio{" + "id_accesorio=" + id_accesorio + ", tipo=" + tipo + ", marca=" + marca + ", modelo=" + modelo + ", temporada=" + temporada + ", precio=" + precio + ", fecha_ingreso=" + fecha_ingreso + '}';
+        return "Accesorio{" + "id_accesorio=" + id_accesorio + ", tipo=" + tipo + ", marca=" + marca + ", modelo=" + modelo + ", precio=" + precio + ", fecha_ingreso=" + fecha_ingreso + '}';
     }
     
 }
