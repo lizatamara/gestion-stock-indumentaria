@@ -7,7 +7,9 @@ import Controlador.DaoAccesorio;
 import Modelo.Accesorio;
 import com.toedter.calendar.JDateChooser;
 import java.sql.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,7 +27,28 @@ public class FormAccesorio extends javax.swing.JFrame {
         initComponents();
         dateChooser = new JDateChooser();
         dateChooser.setDateFormatString("dd-MM-yyyy");
+        cargarTabla();
     }
+    
+    private void cargarTabla(){
+        try {
+            DefaultTableModel dtm = new DefaultTableModel();
+            List<Accesorio> lista = new DaoAccesorio().listarAccesorio();
+            for (Accesorio accesorio : lista) {
+                String[] fila = new String[6];
+                fila[0] = String.valueOf(accesorio.getId_accesorio());
+                fila[1] = String.valueOf(accesorio.getTipo());
+                fila[2] = String.valueOf(accesorio.getMarca());
+                fila[3] = String.valueOf(accesorio.getModelo());
+                fila[4] = String.valueOf(accesorio.getPrecio());
+                fila[5] = String.valueOf(accesorio.getFecha_ingreso());
+                dtm.addRow(fila);
+            }
+            tblAccesorio.setModel(dtm);
+        } catch (Exception e){
+            System.err.println("Error al listar tabla "+e.getMessage());
+        }
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,7 +78,7 @@ public class FormAccesorio extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblAccesorio = new javax.swing.JTable();
         btnLimpiar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
@@ -134,7 +157,7 @@ public class FormAccesorio extends javax.swing.JFrame {
 
         btnEliminar.setText("Eliminar");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblAccesorio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -157,9 +180,9 @@ public class FormAccesorio extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(35);
+        jScrollPane1.setViewportView(tblAccesorio);
+        if (tblAccesorio.getColumnModel().getColumnCount() > 0) {
+            tblAccesorio.getColumnModel().getColumn(0).setPreferredWidth(35);
         }
 
         btnLimpiar.setText("Limpiar");
@@ -319,6 +342,7 @@ public class FormAccesorio extends javax.swing.JFrame {
             Accesorio a = new Accesorio(id_accesorio, tipo, marca, modelo, precio, fecha_ingreso);
             if(new DaoAccesorio().agregarAccesorio(a)){
                 JOptionPane.showMessageDialog(this, "Registratdo");
+                cargarTabla();
             } else {
                 JOptionPane.showMessageDialog(this, "No Registratdo");
             }
@@ -373,7 +397,6 @@ public class FormAccesorio extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboTipo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private com.toedter.calendar.JDateChooser jcalFechaIngreso;
     private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblFechaDe;
@@ -385,6 +408,7 @@ public class FormAccesorio extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JSpinner spCodigo;
     private javax.swing.JSpinner spPrecio;
+    private javax.swing.JTable tblAccesorio;
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtModelo;
     // End of variables declaration//GEN-END:variables
