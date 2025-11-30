@@ -163,6 +163,11 @@ public class FormAccesorio extends javax.swing.JFrame {
         });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         tblAccesorio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -405,6 +410,8 @@ public class FormAccesorio extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    
+    
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         spCodigo.setValue(0);
         cboTipo.setSelectedIndex(0);
@@ -413,6 +420,10 @@ public class FormAccesorio extends javax.swing.JFrame {
         spPrecio.setValue(0);
         jcalFechaIngreso.setDate(null);
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
