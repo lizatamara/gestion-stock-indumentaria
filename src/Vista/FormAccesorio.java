@@ -25,14 +25,21 @@ public class FormAccesorio extends javax.swing.JFrame {
     
     public FormAccesorio() {
         initComponents();
+        cargarTabla();
         dateChooser = new JDateChooser();
         dateChooser.setDateFormatString("dd-MM-yyyy");
-        cargarTabla();
+
     }
     
     private void cargarTabla(){
         try {
             DefaultTableModel dtm = new DefaultTableModel();
+            dtm.addColumn("Código");
+            dtm.addColumn("Tipo");
+            dtm.addColumn("Marca");
+            dtm.addColumn("Modelo");
+            dtm.addColumn("Precio");
+            dtm.addColumn("Fecha Ingreso");
             List<Accesorio> lista = new DaoAccesorio().listarAccesorio();
             for (Accesorio accesorio : lista) {
                 String[] fila = new String[6];
