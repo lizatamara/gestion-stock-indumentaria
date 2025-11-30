@@ -301,10 +301,7 @@ public class FormAccesorio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        boolean centinela = false;
-        try {
-            this.conexion.close();
-            
+        try {            
             int id_accesorio = Integer.parseInt(spCodigo.getValue().toString());
             String tipo = cboTipo.getSelectedItem().toString();
             String marca = txtMarca.getText();
@@ -319,7 +316,7 @@ public class FormAccesorio extends javax.swing.JFrame {
             }
             int precio = Integer.parseInt(spPrecio.getValue().toString());
 
-            Accesorio a = new Accesorio(id_accesorio, tipo, marca, modelo, fecha_ingreso, precio);
+            Accesorio a = new Accesorio(id_accesorio, tipo, marca, modelo, precio, fecha_ingreso);
             if(new DaoAccesorio().agregarAccesorio(a)){
                 JOptionPane.showMessageDialog(this, "Registratdo");
             } else {
@@ -329,10 +326,7 @@ public class FormAccesorio extends javax.swing.JFrame {
             
         } catch (Exception e){
             System.err.println("Error al insertar elemento "+e.getMessage());
-        } finally {
-            this.conexion.close();
         }
-        return centinela;
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     /**

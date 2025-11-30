@@ -22,7 +22,7 @@ public class Accesorio {
     public Accesorio() {
     }
 
-    public Accesorio(int id_accesorio, String tipo, String marca, String modelo, String temporada, int precio, Date fecha_ingreso) {
+    public Accesorio(int id_accesorio, String tipo, String marca, String modelo, int precio, Date fecha_ingreso) {
         this.id_accesorio = id_accesorio;
         this.tipo = tipo;
         this.marca = marca;
