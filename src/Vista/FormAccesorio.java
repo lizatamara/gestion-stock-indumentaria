@@ -193,6 +193,11 @@ public class FormAccesorio extends javax.swing.JFrame {
         }
 
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         btnVolver.setText("Volver");
 
@@ -327,7 +332,47 @@ public class FormAccesorio extends javax.swing.JFrame {
     }//GEN-LAST:event_txtMarcaActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        try {
+            int id_accesorio = (int) spCodigo.getValue();
+            String tipo = cboTipo.getSelectedItem().toString();
+            String marca = txtMarca.getText();
+            String modelo = txtModelo.getText();
+            int precio = (int) spPrecio.getValue();
+            java.sql.Date fecha_ingreso;
+            if (jcalFechaIngreso.getDate() != null) {
+                fecha_ingreso = new java.sql.Date(jcalFechaIngreso.getDate().getTime());
+            } else {
+                fecha_ingreso = new java.sql.Date(System.currentTimeMillis());
+            }
+            
+            if(id_accesorio<=0){
+                JOptionPane.showMessageDialog(this, "Id no válida");
+                return;
+            } else if(marca.trim().length()==0){
+                JOptionPane.showMessageDialog(this, "Marca no válida");
+                return;
+            } else if(modelo.trim().length()==0){
+                JOptionPane.showMessageDialog(this, "Modelo no válido");
+                return;
+            } else if(precio<=0){
+                JOptionPane.showMessageDialog(this, "Precio no válido");
+                return;
+            }
+            
+            //3.- Crear el objeto y guardar
+            Accesorio a = new Accesorio (id_accesorio, tipo, marca, modelo, precio, fecha_ingreso);
+            
+            if(new DaoAccesorio().modificarAccesorio(a)){
+                JOptionPane.showMessageDialog(this, "Accesorio Modificado");
+                cargarTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "Accesorio NO Modificado");
+            }
+            
+            } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                    "ERROR "+e.getMessage());
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -359,6 +404,15 @@ public class FormAccesorio extends javax.swing.JFrame {
             System.err.println("Error al insertar elemento "+e.getMessage());
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        spCodigo.setValue(0);
+        cboTipo.setSelectedIndex(0);
+        txtMarca.setText("");
+        txtModelo.setText("");
+        spPrecio.setValue(0);
+        jcalFechaIngreso.setDate(null);
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     /**
      * @param args the command line arguments

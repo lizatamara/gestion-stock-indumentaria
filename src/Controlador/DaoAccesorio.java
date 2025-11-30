@@ -78,4 +78,58 @@ public class DaoAccesorio {
         return listado;
     }
     
+    // Eliminar
+    public boolean eliminarAccesorio(int id_accesorio) throws SQLException{
+        boolean centinela = false;
+        try {
+            this.conexion = new Conexion().obtenerConexion();
+            String query = "delete from ACCESORIO where id_accesorio ="+id_accesorio;
+            CallableStatement csmnt = this.conexion.prepareCall(query);
+            if(csmnt.executeUpdate()>0){
+                centinela = true;
+            }     
+        } catch (Exception e) {
+            System.err.println("Error al eliminar accesorio "+e.getMessage());
+        } finally {
+            this.conexion.close();
+        }
+        return centinela;
+    }
+    
+    
+    // Modificar
+    
+    public boolean modificarAccesorio(Accesorio na) throws SQLException{
+        boolean centinela = false;
+        try {
+            this.conexion = new Conexion().obtenerConexion();
+            String query = "update ACCESORIO set tipo = ? ,"
+                                            + "marca  = ? ,"
+                                            + "modelo = ? ,"
+                                            + "precio = ? ,"
+                                       + "fecha_ingreso = ? where id_accesorio = ?";
+            CallableStatement csmnt = this.conexion.prepareCall(query);
+            csmnt.setString(1, na.getTipo());
+            csmnt.setString(2, na.getMarca());
+            csmnt.setString(3, na.getModelo());
+            csmnt.setInt(4, na.getPrecio());
+            if (na.getFecha_ingreso() != null) {
+                csmnt.setDate(5, new java.sql.Date(na.getFecha_ingreso().getTime()));
+            } else {
+                csmnt.setDate(5, new java.sql.Date(System.currentTimeMillis()));
+            }
+            csmnt.setInt(6, na.getId_accesorio());
+            
+            if(csmnt.executeUpdate()>0){
+                centinela = true;
+            }
+            
+        } catch (Exception e) {
+            System.out.println("Error al Modificar Accesorio"+e.getMessage());
+        } finally {
+            this.conexion.close();
+        }
+        return centinela;
+    }
+    
 }
